@@ -86,7 +86,7 @@ class BaseController extends BaseObject
      */
     public function render($data = [])
     {
-        return json_encode($data, JSON_UNESCAPED_UNICODE);
+        return json_encode(['data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
     /**

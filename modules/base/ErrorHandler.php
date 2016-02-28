@@ -159,6 +159,9 @@ class ErrorHandler extends BaseObject
         ];
 
         if ($exception instanceof HttpException) {
+            if ($exception->params) {
+                $array['error']['params'] = $exception->params;
+            }
             if (isset(Application::$httpTypes[$exception->statusCode])) {
                 $array['error']['type'] = Application::$httpTypes[$exception->statusCode];
             }

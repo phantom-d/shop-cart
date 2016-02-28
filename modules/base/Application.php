@@ -18,12 +18,12 @@ class Application extends BaseObject
     /**
      * @var \phantomd\ShopCart\modules\base\Session Session data
      */
-    static $session = null;
+    public static $session = null;
 
     /**
      * @var \phantomd\ShopCart\modules\base\Cookies Cookies data
      */
-    static $cookies = null;
+    public static $cookies = null;
 
     /**
      * @var array HTTP status codes 

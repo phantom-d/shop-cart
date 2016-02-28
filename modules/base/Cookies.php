@@ -33,7 +33,7 @@ class Cookies extends BaseObject
     {
         if (mb_strlen($name) > 0) {
             static::$_data[$name] = $value;
-            setcookie($name, $value, 0, '/', $this->host);
+            setcookie($name, $value, strtotime('+5 minutes'), '/', $this->host);
         }
     }
 
@@ -41,7 +41,7 @@ class Cookies extends BaseObject
     {
         if (isset(static::$_data[$name])) {
             unset(static::$_data[$name]);
-            setcookie($name, '', time() - 3600, '/', $this->host);
+            setcookie($name, '', strtotime('-1 hour'), '/', $this->host);
         }
     }
 
