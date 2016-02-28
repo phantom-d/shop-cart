@@ -1,0 +1,26 @@
+{
+    "name": "phantom-d/shop-cart",
+    "description": "Simple shop cart",
+    "minimum-stability": "dev",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Ermolovich",
+            "email": "anton.ermolovich@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "2.0.*",
+        "codeception/specify": "*",
+        "codeception/verify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "phantomd\\ShopCart\\": ""
+        }
+    }
+}

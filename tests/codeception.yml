@@ -1,0 +1,23 @@
+actor: Tester
+coverage:
+    enabled: true
+    whitelist:
+        include:
+            - ../*
+        exclude:
+            - ../vendor/*
+            - ../docs/*
+            - ../config/*
+            - ../tests/*
+            - ../README.md
+            - ../composer.*
+paths:
+    tests: codeception
+    data: codeception/_data
+    helpers: codeception/_support
+    log: codeception/_output
+settings:
+    bootstrap: _bootstrap.php
+    log: true
+    colors: true
+    memory_limit: 1024M
