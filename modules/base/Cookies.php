@@ -7,13 +7,13 @@ class Cookies extends BaseObject
 
     private static $_data = null;
 
-    private $host         = null;
+    private $host = null;
 
     public function init()
     {
         session_start();
         static::$_data = $_COOKIE;
-        $this->host = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
+        $this->host    = preg_replace('/^www\./', '', $_SERVER['HTTP_HOST']);
     }
 
     public function __get($name)
@@ -29,11 +29,19 @@ class Cookies extends BaseObject
         return $return;
     }
 
-    public function __set($name, $value, $expired = 0)
+    public function __set($name, $value)
     {
         if (mb_strlen($name) > 0) {
             static::$_data[$name] = $value;
-            setcookie($name, $value, (int)$expired, '/', $this->host);
+            setcookie($name, $value, 0, '/', $this->host);
+        }
+    }
+
+    public function __unset($name)
+    {
+        if (isset(static::$_data[$name])) {
+            unset(static::$_data[$name]);
+            setcookie($name, '', time() - 3600, '/', $this->host);
         }
     }
 

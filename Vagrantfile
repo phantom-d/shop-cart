@@ -90,7 +90,7 @@ Vagrant.configure("2") do |config|
 
     cd ${SITE_DIR}/config/vagrant/etc
     cp -Rf ./* /etc
-    chown -R root:vagrant /var/lib/php/*
+    chown -R nginx:nginx /var/lib/php/*
 
     systemctl enable php-fpm
     systemctl restart php-fpm

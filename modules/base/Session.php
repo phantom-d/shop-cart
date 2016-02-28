@@ -33,6 +33,13 @@ class Session extends BaseObject
         }
     }
 
+    public function __unset($name)
+    {
+        if (isset(static::$_data[$name])) {
+            unset(static::$_data[$name]);
+        }
+    }
+
     public function send()
     {
         $_SESSION = static::$_data;
