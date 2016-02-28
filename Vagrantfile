@@ -124,7 +124,7 @@ Vagrant.configure("2") do |config|
     cd ${SITE_DIR}
 
     if [ -z "`cat ~/.bashrc | grep PATH`" ]; then
-      echo 'PATH=$PATH:$HOME/.composer/vendor/bin' >> ~/.bashrc
+      echo 'PATH=$PATH:$HOME/.composer/vendor/bin:'${SITE_DIR}'/vendor/bin' >> ~/.bashrc
       echo 'export PATH' >> ~/.bashrc
     fi
 
