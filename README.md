@@ -13,9 +13,16 @@ Simple shop cart
 
 ####Получение кода:
 
-Выполните следующий набор комманд:
+#####Composer:
 
-* Клонирование репозитория: `git clone https://github.com/phantom-d/shop-cart.git`
+Выполнить команду `composer create-project --prefer-dist phantom-d/shop-cart`
+
+#####GitHub:
+
+Клонирование репозитория: `git clone https://github.com/phantom-d/shop-cart.git`
+
+#####Разворачивание среды разработки
+
 * Переходите в директорию проекта: `cd ./var/www/shop-cart`
 * Запуск среды разработки: `vagrant up`
 

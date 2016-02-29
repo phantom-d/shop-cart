@@ -1,7 +1,6 @@
 {
     "name": "phantom-d/shop-cart",
     "description": "Simple shop cart",
-    "minimum-stability": "dev",
     "type": "project",
     "license": "MIT",
     "authors": [
