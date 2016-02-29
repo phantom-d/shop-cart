@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
     yum -y update
     yum -y localinstall https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
     yum -y update
-    yum -y install htop openssl-devel mc screen php56w php56w-devel php56w-mbstring php56w-process php56w-bcmath php56w-fpm git composer nginx
+    yum -y install htop mc screen php56w php56w-devel php56w-mbstring php56w-fpm git composer nginx
     yum -y groupinstall 'Development Tools'
 
     cd ${SITE_DIR}/config/vagrant/etc
@@ -105,21 +105,7 @@ Vagrant.configure("2") do |config|
     fi
   SHELL
 
-  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/id_rsa.pub"
-  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "~/.ssh/id_rsa"
-  config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
-  config.vm.provision "file", source: "~/.composer/auth.json", destination: "~/.composer/auth.json"
-
   config.vm.provision "shell", privileged: false, args: site_dir, inline: <<-SHELL
-    HOST_KEY=`cat ~/.ssh/id_rsa.pub`
-    AUTH=`cat ~/.ssh/authorized_keys | grep "${HOST_KEY}"`
-
-    chmod -R 600 ~/.ssh/*
-
-    if [ -z "${AUTH}" ]; then
-      echo "${HOST_KEY}" >> ~/.ssh/authorized_keys
-    fi
-
     SITE_DIR="${1}"
     cd ${SITE_DIR}
 

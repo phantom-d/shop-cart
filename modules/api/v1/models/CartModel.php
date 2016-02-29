@@ -109,7 +109,7 @@ class CartModel extends \phantomd\ShopCart\modules\base\BaseModel
      * Add product to cart
      *
      * @param integer $id ID product
-     * @param integer $quantity Quantity
+     * @param integer $quantity Quantity. Must be in interval between 1 and 10.
      * @return mixed Errors validating product data
      */
     public function addProduct($id, $quantity = 1)
@@ -120,24 +120,33 @@ class CartModel extends \phantomd\ShopCart\modules\base\BaseModel
             'quantity'   => (int)$quantity,
         ];
 
-        $new = true;
-        if ($this->products) {
-            foreach ($this->products as $key => $product) {
-                if ($product->product_id === $params['product_id']) {
-                    $this->products[$key]->quantity += $params['quantity'];
-                    $new = false;
+        $check = true;
+
+        if (1 > $params['quantity'] || 10 < $params['quantity']) {
+            $this->setError('quantity', "Incorrect quantity: '{$params['quantity']}'.", 'required');
+            $check = false;
+        }
+
+        if ($check) {
+            $new = true;
+            if ($this->products) {
+                foreach ($this->products as $key => $product) {
+                    if ($product->product_id === $params['product_id']) {
+                        $this->products[$key]->quantity += $params['quantity'];
+                        $new = false;
+                    }
+                }
+            }
+
+            if ($new) {
+                $model = CartProductModel::model($params);
+                if ($model->validate()) {
+                    $this->products[] = $model;
                 }
             }
         }
 
-        if ($new) {
-            $model = CartProductModel::model($params);
-            if ($model->validate()) {
-                $this->products[] = $model;
-            } else {
-                $return = $model->getErrors();
-            }
-        }
+        $return = $model->getErrors();
 
         if (empty($return)) {
             $countCart            = $this->countCart();
