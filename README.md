@@ -15,7 +15,7 @@ Simple shop cart
 
 #####Composer:
 
-Выполнить команду `composer create-project --prefer-dist phantom-d/shop-cart`
+Выполнить команду `composer create-project --no-dev --prefer-dist phantom-d/shop-cart`
 
 #####GitHub:
 
