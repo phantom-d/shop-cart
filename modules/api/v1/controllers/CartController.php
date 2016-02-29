@@ -30,12 +30,11 @@ class CartController extends \phantomd\ShopCart\modules\base\BaseController
         $cart->save();
     }
 
-    public function actionDelete($id)
+    public function actionDelete($product_id)
     {
-        $id   = (int)$id;
         $cart = CartModel::model();
 
-        if ($errors = $cart->deleteProduct($id)) {
+        if ($errors = $cart->deleteProduct((int)$product_id)) {
             throw new \phantomd\ShopCart\modules\base\HttpException(400, 'Invalid data parameters', 0, null, $errors);
         }
         $cart->save();

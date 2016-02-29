@@ -100,12 +100,6 @@ Vagrant.configure("2") do |config|
   SHELL
   
   config.vm.provision "shell", privileged: false, args: site_dir, inline: <<-SHELL
-    if [ ! -d ~/.composer ]; then
-      mkdir ~/.composer
-    fi
-  SHELL
-
-  config.vm.provision "shell", privileged: false, args: site_dir, inline: <<-SHELL
     SITE_DIR="${1}"
     cd ${SITE_DIR}
 

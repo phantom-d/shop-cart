@@ -19,12 +19,23 @@ class ProductsController extends \phantomd\ShopCart\modules\base\BaseController
     }
 
     /**
+     * Check error 500
+     *
+     * @return string
+     */
+    public function actionError()
+    {
+        return $this->render($data);
+    }
+
+    /**
      * @inheritdoc
      */
     protected function verbs()
     {
         return [
             'GET'     => 'index',
+            'POST'    => 'error',
             'OPTIONS' => 'options',
         ];
     }

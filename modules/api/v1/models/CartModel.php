@@ -114,39 +114,35 @@ class CartModel extends \phantomd\ShopCart\modules\base\BaseModel
      */
     public function addProduct($id, $quantity = 1)
     {
-        $return = null;
+        $return = [];
         $params = [
             'product_id' => (int)$id,
             'quantity'   => (int)$quantity,
         ];
 
-        $check = true;
-
-        if (1 > $params['quantity'] || 10 < $params['quantity']) {
-            $this->setError('quantity', "Incorrect quantity: '{$params['quantity']}'.", 'required');
-            $check = false;
-        }
-
-        if ($check) {
+        $model = CartProductModel::model($params);
+        if ($model->validate()) {
             $new = true;
-            if ($this->products) {
-                foreach ($this->products as $key => $product) {
-                    if ($product->product_id === $params['product_id']) {
-                        $this->products[$key]->quantity += $params['quantity'];
-                        $new = false;
+            if (1 > $params['quantity'] || 10 < $params['quantity']) {
+                $this->setError('quantity', "Incorrect quantity: '{$params['quantity']}'.", 'required');
+            } else {
+                if ($this->products) {
+                    foreach ($this->products as $key => $product) {
+                        if ($product->product_id === $params['product_id']) {
+                            $this->products[$key]->quantity += $params['quantity'];
+                            $new = false;
+                        }
                     }
                 }
-            }
-
-            if ($new) {
-                $model = CartProductModel::model($params);
-                if ($model->validate()) {
+                if ($new) {
                     $this->products[] = $model;
                 }
             }
+        } else {
+            $return = array_merge($return, $model->getErrors());
         }
 
-        $return = $model->getErrors();
+        $return = array_merge($return, $this->getErrors());
 
         if (empty($return)) {
             $countCart            = $this->countCart();

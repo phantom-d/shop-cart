@@ -1,0 +1,10 @@
+class_name: ApiTester
+modules:
+    enabled: [PhpBrowser, REST, ApiHelper]
+    config:
+        PhpBrowser:
+            url: 'http://www.shop-cart.local'
+        REST:
+            depends: PhpBrowser
+            url: 'http://www.shop-cart.local/api'
+            part: Json

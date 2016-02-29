@@ -60,22 +60,30 @@ class BaseController extends BaseObject
 
             $parsePath = array_slice($this->path, count($this->route));
 
-            $args = [];
+            $args   = [];
+            $errors = [];
 
             if ($params = $reflectionMethod->getParameters()) {
-                if ($parsePath) {
-                    foreach ($params as $key => $param) {
+                foreach ($params as $key => $param) {
+                    if (isset($parsePath[$key])) {
                         $args[$param->name] = $parsePath[$key];
+                    } else {
+                        $errors[] = [
+                            'code'    => 'required',
+                            'message' => ucfirst(mb_strtolower(explode('_', $param->name)[0])) . ' cannot be blank.',
+                            'name'    => $param->name,
+                        ];
                     }
-                } else {
-                    throw new HttpException(400, 'Invalid request parameters.');
+                }
+                if ($errors) {
+                    throw new \phantomd\ShopCart\modules\base\HttpException(400, 'Invalid data parameters', 0, null, $errors);
                 }
             }
-            if (count($parsePath) === count($args)) {
+            if (count($parsePath) === count($params)) {
                 return call_user_func_array([$this, $action], $args);
             }
         }
-        throw new HttpException(404, 'Unable to resolve the request "' . $this->requestPath . '".');
+        throw new HttpException(404, 'Unable to resolve the request "' . $this->requestPath . '".', 0, null, $errors);
     }
 
     /**
